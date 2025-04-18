@@ -1,9 +1,5 @@
-# Vue.js on Render
+# Vue 3 + Vite
 
-This is a minimal Vue.js project bootstrapped with [vue-cli](https://cli.vuejs.org/guide/creating-a-project.html).
+This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-The sample app is deployed on Render at https://vue.onrender.com.
-
-## Deployment
-
-Follow the guide at https://render.com/docs/deploy-vue-js.
+Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
