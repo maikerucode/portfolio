@@ -1,13 +1,22 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import { ref } from 'vue'
+  import HelloWorld from './components/HelloWorld.vue'
+  import { ref } from 'vue'
 
-const links = ['Home', 'About', 'Projects', 'Contact'];
-const active_index = ref(null);
+  const links = ['Home', 'About', 'Projects', 'Contact'];
+  const active_index = ref(0);
+  const menu_state = ref(0);
 
-function toggleActive(index) {
-  active_index.value = active_index.value === index ? null : index
-}
+  function toggleActive(index) {
+    active_index.value = index;
+     console.log("Clicked index: ", index);
+  }
+
+  function toggleMenu() {
+    menu_state.value = !menu_state.value;
+    console.log(menu_state.value);
+  }
+
+  // console.log(active_index);
 </script>
 
 <template>
@@ -44,10 +53,21 @@ function toggleActive(index) {
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4 link-container">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Home</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About Me</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contact Info</a>
+            <a
+              v-for="(link, index) in links"
+              :key="index"
+              href="#"
+              @click.prevent="toggleActive(index)"
+              :class="[
+                'rounded-md px-3 py-2 text-sm font-medium',
+                active_index === index
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              ]"
+              :aria-current="active_index.value === index ? 'page' : null"
+            >
+              {{ link }}
+            </a>
           </div>
         </div>
       </div>
@@ -63,7 +83,7 @@ function toggleActive(index) {
         <!-- Profile dropdown -->
         <div class="relative ml-3">
           <div>
-            <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+            <button @click.prevent="toggleMenu" type="button" class="cursor-pointer relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>
               <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
@@ -80,7 +100,7 @@ function toggleActive(index) {
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           -->
-          <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+          <div v-if="menu_state" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
             <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
             <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
