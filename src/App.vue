@@ -99,7 +99,7 @@
         v-for="(link, index) in links"
         :key="index"
         href="#"
-        @click.prevent="toggleActive(index)"
+        @click.prevent="toggleActive(index); toggleHamburger()"
         :class="[
           'block rounded-md px-3 py-2 text-base font-medium',
           active_index === index
